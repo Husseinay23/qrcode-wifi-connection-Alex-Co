@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="logos/Final Logo Alex & Co_page-0001.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex & Co Restaurant Wi-Fi Login</title>
+    
+</head>
+<style>
+/* Base and responsive styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f02923;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 500px;
+      padding: 30px;
+      background: #ffffff;
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 20px; /* Space between main container and powered by section */
+    }
+    /* Logo Styling */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    
+    #restaurantLogo {
+      width: 200px;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    h1 {
+      color: #f02923;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      font-size: 16px;
+      margin-bottom: 20px; /* Space between paragraph and button */
+    }
+    
+    button {
+      padding: 12px 25px;
+      background-color: #f02923;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+    
+    button:hover {
+      background-color: #d91e19;
+    }
+    
+    #statusMessage {
+      font-size: 14px;
+      color: #333;
+    }
+    
+    /* Powered by United section */
+    
+    /* Internet Company Logo Section Styling */
+    .internet-company-container {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff; /* White background for the section */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .internet-company-logo {
+      margin-bottom: 15px;
+    }
+    
+    .company-logo {
+      width: 100px; /* Adjust the width to ensure logo is visible */
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+    
+    .learn-more-link {
+      font-size: 14px;
+      color: #f02923; /* Red color to match the theme */
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .learn-more-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      color: #000;
+      margin: 15% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+    
+      h1 {
+        font-size: 1.5em;
+      }
+    
+      button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+    
+      .powered-by-container p {
+        font-size: 14px;
+      }
+    
+      .company-logo {
+        width: 80px;
+      }
+    }
+</style>
+<body>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Main Restaurant Logo -->
+    <div class="logo-container">
+        <img src="logos/Final Logo Alex & Co_page-0001.png" alt="Restaurant Logo" id="restaurantLogo">
+    </div>
+    <h1>Welcome to Alex & Co </h1>
+    <p>Click below to connect to the network.</p>
+    <button id="connectBtn">Connect to Wi-Fi</button>
+    <div id="statusMessage">Get 1 hour of free internet access.</div>
+</div>
+
+<!-- Internet Company Logo Section -->
+<div class="internet-company-container">
+  <div class="internet-company-logo">
+      <img src="logos/United-logo.png" alt="Internet Company Logo" class="company-logo">
+  </div>
+  <p>Powered by United</p>
+  <a href="https://unitedrdc.com/" class="learn-more-link" target="_blank">Click to learn more</a>
+</div>
+
+<!-- Modal for scan confirmation -->
+<div id="scannerModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Confirm your connection?</p>
+        <button id="confirmScan">Confirm</button>
+    </div>
+</div>
+
+<script> // Connect Button event
+    document.getElementById("connectBtn").addEventListener("click", openModal);
+    
+    // Modal close event
+    document.getElementById("confirmScan").addEventListener("click", confirmScan);
+    
+    // Modal functionality for connection confirmation
+    function openModal() {
+      document.getElementById("scannerModal").style.display = "block";
+    }
+    
+    // Close modal when clicking outside the modal content
+    window.addEventListener("click", function(event) {
+      const modal = document.getElementById("scannerModal");
+      const modalContent = document.querySelector(".modal-content");
+    
+      // Check if the click is outside of the modal content
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+    function closeModal() {
+      document.getElementById("scannerModal").style.display = "none";
+    }
+    
+    function confirmScan() {
+      // Close the modal
+      closeModal();
+    
+      // Show connecting status
+      document.getElementById("statusMessage").innerText = "Connecting...";
+      document.getElementById("scanBtn").disabled = true; // Disable the button while connecting
+    
+      // Simulate an API call to the router to authenticate and connect to Wi-Fi
+      fetch('https://router-api-address/connect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          device_mac: "00:14:22:01:23:45",  // Use the MAC address of the device
+          action: 'connect'                 // Action to connect the user to Wi-Fi
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          document.getElementById("statusMessage").innerText = "Connected to Wi-Fi!";
+          setTimeout(() => {
+            // Simulate the timer countdown for Wi-Fi access
+            let timeLeft = 60; // 1 hour
+            const timerInterval = setInterval(() => {
+              timeLeft--;
+              document.getElementById("statusMessage").innerText = `Time left: ${timeLeft} minutes`;
+              if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById("statusMessage").innerText = "Session expired. Please reconnect.";
+              }
+            }, 60000); // Update every minute
+          }, 1000); // Delay to show connecting status
+        } else {
+          document.getElementById("statusMessage").innerText = "Failed to connect. Try again.";
+          document.getElementById("scanBtn").disabled = false;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("statusMessage").innerText = "Connection error.";
+        document.getElementById("scanBtn").disabled = false;
+      });
+    }
+    
+    // Timer function for session countdown (if needed separately)
+    function startTimer(duration) {
+      let timer = duration, minutes, seconds;
+      const timerDisplay = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        document.getElementById("statusMessage").innerText = `Time left: ${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+        if (--timer < 0) {
+          clearInterval(timerDisplay);
+          document.getElementById("statusMessage").innerText = "Session expired. Please click again to reconnect.";
+        }
+      }, 1000);
+    }
+    </script>
+
+</body>
+</html>
